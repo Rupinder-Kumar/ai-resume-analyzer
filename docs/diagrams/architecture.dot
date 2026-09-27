@@ -1,0 +1,60 @@
+digraph Architecture {
+  rankdir=TB;
+  fontname="Helvetica";
+  node [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", fillcolor="#f3f4f6", color="#9ca3af"];
+  edge [fontname="Helvetica", fontsize=9, color="#6b7280"];
+
+  User [label="User (Browser)", shape=oval, fillcolor="#e0e7ff", color="#4f46e5"];
+
+  subgraph cluster_frontend {
+    label="Next.js Frontend (Netlify-hosted)";
+    style="rounded";
+    color="#c7d2fe";
+    Index [label="pages/index.tsx\n(form + state)"];
+    TextOrFile [label="TextOrFileInput\ncomponent"];
+    Results [label="ResultsPanel\n(donut + Copy Feedback)"];
+    Index -> TextOrFile;
+    Index -> Results;
+  }
+
+  subgraph cluster_functions {
+    label="Netlify Functions (serverless)";
+    style="rounded";
+    color="#bbf7d0";
+    Extract [label="extract-text.ts"];
+    Analyze [label="analyze.ts\n(draft -> retrieve -> grounded)"];
+    Retrieve [label="retrieve.ts\n(cosine similarity)"];
+    Embedding [label="lib/embedding.ts\n(embedTexts)"];
+    Analyze -> Retrieve;
+    Retrieve -> Embedding;
+  }
+
+  subgraph cluster_data {
+    label="Build-time Data";
+    style="rounded";
+    color="#fde68a";
+    Tips [label="data/resume-best-\npractices.json\n(20 tips)"];
+    EmbedScript [label="scripts/embed.ts\n(one-time)"];
+    Embeddings [label="data/embeddings.json\n(id, text, embedding)"];
+    Tips -> EmbedScript -> Embeddings;
+    Embeddings -> Retrieve [label="imported at\nbuild time", style=dashed];
+    EmbedScript -> Embedding [label="uses same\nembedTexts()"];
+  }
+
+  subgraph cluster_external {
+    label="External Services";
+    style="rounded";
+    color="#fecaca";
+    Claude [label="Anthropic\nClaude API", fillcolor="#fee2e2"];
+    Voyage [label="Voyage AI\nEmbeddings API\n(if VOYAGE_API_KEY set)", fillcolor="#fee2e2"];
+    Local [label="Local model\n(Xenova/all-MiniLM-L6-v2)\nfallback, no key needed", fillcolor="#fee2e2"];
+  }
+
+  User -> Index [label="loads page"];
+  TextOrFile -> Extract [label="upload .pdf/.docx"];
+  Index -> Analyze [label="POST resumeText,\njdText"];
+  Analyze -> Claude [label="draft + grounded\nprompts"];
+  Embedding -> Voyage [label="if key set"];
+  Embedding -> Local [label="fallback"];
+  Analyze -> Results [label="matchScore, strengths,\ngaps, summary", style=dashed, dir=back];
+}

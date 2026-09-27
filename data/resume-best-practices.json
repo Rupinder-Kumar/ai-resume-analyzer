@@ -1,0 +1,22 @@
+[
+  { "id": "tip-01", "text": "quantify impact with metrics (%, $, time saved)" },
+  { "id": "tip-02", "text": "lead bullets with strong action verbs" },
+  { "id": "tip-03", "text": "mirror JD keywords for ATS parsing" },
+  { "id": "tip-04", "text": "keep the resume to one or two pages" },
+  { "id": "tip-05", "text": "use reverse-chronological order for work history" },
+  { "id": "tip-06", "text": "tailor the resume for each job application" },
+  { "id": "tip-07", "text": "avoid personal pronouns like I, me, and my" },
+  { "id": "tip-08", "text": "use consistent formatting and fonts throughout" },
+  { "id": "tip-09", "text": "put the most relevant experience near the top" },
+  { "id": "tip-10", "text": "use bullet points instead of dense paragraphs" },
+  { "id": "tip-11", "text": "trim outdated or irrelevant experience older than 10-15 years" },
+  { "id": "tip-12", "text": "include a skills section with relevant tools and technologies" },
+  { "id": "tip-13", "text": "proofread carefully for spelling and grammar errors" },
+  { "id": "tip-14", "text": "save and submit as a PDF unless another format is requested" },
+  { "id": "tip-15", "text": "avoid graphics, tables, and multi-column layouts that break ATS parsing" },
+  { "id": "tip-16", "text": "use a professional file name like Name_Resume.pdf" },
+  { "id": "tip-17", "text": "open with a concise summary instead of a vague objective statement" },
+  { "id": "tip-18", "text": "show career progression, not just a list of job duties" },
+  { "id": "tip-19", "text": "replace vague adjectives with numbers and concrete results" },
+  { "id": "tip-20", "text": "list education after experience once you have 3+ years of work history" }
+]

@@ -1,0 +1,30 @@
+digraph AnalyzeFlow {
+  rankdir=TB;
+  fontname="Helvetica";
+  node [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", fillcolor="#f3f4f6", color="#9ca3af"];
+  edge [fontname="Helvetica", fontsize=9, color="#6b7280"];
+
+  Start [label="POST /analyze\n{ resumeText, jdText }", shape=oval, fillcolor="#e0e7ff", color="#4f46e5"];
+  Validate [label="Validate body\n& ANTHROPIC_API_KEY"];
+  Draft [label="Pass 1: Draft Claude call\n(buildDraftPrompt)\n-> matchScore, strengths,\ngaps, summary"];
+  Retrieve [label="retrieveTips(draft.gaps)\nembed gap text -> cosine\nsimilarity vs embeddings.json"];
+  Decision [label="Tips found?", shape=diamond, fillcolor="#fef9c3"];
+  Grounded [label="Pass 2: Grounded Claude call\n(buildGroundedPrompt +\nretrieved tips)\n-> final matchScore, strengths,\ngaps, summary"];
+  ReturnDraft [label="Return draft result\n(200)", fillcolor="#e5e7eb"];
+  ReturnGrounded [label="Return grounded result\n(200)", fillcolor="#dcfce7"];
+  ErrorPath [label="ClaudeCallError /\nunexpected error", fillcolor="#fee2e2"];
+  ErrorResp [label="Return { error, details }\n(400/500/502)", fillcolor="#fee2e2"];
+
+  Start -> Validate;
+  Validate -> Draft [label="valid"];
+  Validate -> ErrorResp [label="invalid\n(400/500)"];
+  Draft -> Retrieve;
+  Draft -> ErrorPath [style=dashed];
+  Retrieve -> Decision;
+  Retrieve -> ReturnDraft [label="retrieval\nthrew (caught)", style=dashed];
+  Decision -> Grounded [label="yes (3-5 tips)"];
+  Decision -> ReturnDraft [label="no"];
+  Grounded -> ReturnGrounded;
+  Grounded -> ErrorPath [style=dashed];
+  ErrorPath -> ErrorResp;
+}

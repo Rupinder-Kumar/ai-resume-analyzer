@@ -1,0 +1,12 @@
+[build]
+  command = "next build"
+  functions = "netlify/functions"
+
+# Official Next.js runtime — auto-detects the build output, wires up
+# SSR/ISR/middleware, and rewrites /_next/* etc. Do not set `publish`
+# manually: the plugin manages the output directory itself.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[functions]
+  node_bundler = "esbuild"

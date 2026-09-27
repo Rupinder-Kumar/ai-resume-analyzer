@@ -1,0 +1,33 @@
+{
+  "name": "ai-resume-analyzer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "embed": "tsx scripts/embed.ts"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.8.0",
+    "recharts": "^2.12.7",
+    "@xenova/transformers": "^2.17.2"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^2.8.1",
+    "@netlify/plugin-nextjs": "^5.7.3",
+    "@types/node": "^20.14.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.3",
+    "tailwindcss": "^3.4.10",
+    "postcss": "^8.4.41",
+    "autoprefixer": "^10.4.20",
+    "tsx": "^4.16.2"
+  }
+}
